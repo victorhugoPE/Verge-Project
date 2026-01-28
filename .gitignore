@@ -1,0 +1,30 @@
+# Arquivos compilados e Build
+/build/
+/dist/
+/out/
+/bin/
+*.class
+
+# Logs do servidor (Importante para não vazar IPs ou erros)
+/log/
+*.log
+
+# Arquivos temporários e de sistema
+.DS_Store
+Thumbs.db
+
+# Configurações de IDE (Eclipse / IntelliJ / VS Code)
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+.vscode/
+
+# Gradle (se estiver usando)
+.gradle/
+gradle-app.setting
+
+# Cuidado com configs com senhas (opcional, mas recomendado)
+# config/server.properties
+# config/database.properties
