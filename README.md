@@ -15,7 +15,7 @@ Este projeto é uma modificação robusta baseada na source **aCis Public**, foc
 
 Para compilar e rodar o servidor, você precisará de:
 
-- **Java Development Kit (JDK) 21**
+- **Java Development Kit (JDK) 25**
 - **MySQL** ou **MariaDB**
 - **Apache Ant** (para build via terminal) ou IDE compatível (Eclipse/IntelliJ).
 
