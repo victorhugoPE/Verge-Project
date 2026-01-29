@@ -134,24 +134,35 @@ object CoroutinePool {
      * Executa Lógica de Jogo (GamePacketHandler).
      * Usa o pool "Instant" que agora aguenta até 64 threads por núcleo.
      */
-    @JvmStatic 
-    fun execute(r: Runnable) {
-        val executors = instantExecutors
-        if (executors == null || executors.isEmpty()) {
-            try { r.run() } catch (e: Exception) { e.printStackTrace() }
-            return
-        }
-        
-        try {
-            totalTasksSubmitted.increment()
-            // Escolhe um pool aleatório para balancear carga
-            val selectedPool = executors[ThreadLocalRandom.current().nextInt(executors.size)]
-            selectedPool.execute(r)
-        } catch (e: Exception) {
-            totalTasksRejected.increment()
-            try { r.run() } catch (ex: Exception) { ex.printStackTrace() }
-        }
-    }
+/**
+     * VERSÃO FULL COROUTINE:
+     * Transforma qualquer Runnable legado em uma Coroutine lançada no Pool de Jogo.
+     */
+	@JvmStatic 
+	    fun execute(r: Runnable) {
+	        val executors = instantExecutors
+	        if (executors == null || executors.isEmpty()) {
+	            try { r.run() } catch (e: Exception) { e.printStackTrace() }
+	            return
+	        }
+	
+	        // Escolhe um pool para balancear
+	        val selectedPool = executors[ThreadLocalRandom.current().nextInt(executors.size)]
+	        
+	        // A MÁGICA ACONTECE AQUI:
+	        // Convertemos o ThreadPool do Java em um Dispatcher do Kotlin.
+	        val dispatcher = selectedPool.asCoroutineDispatcher()
+	        
+	        // Lançamos uma Coroutine "fire-and-forget"
+	        BackgroundScope.launch(dispatcher) {
+	            try {
+	                r.run()
+	            } catch (e: Exception) {
+	                LOGGER.severe("Erro em tarefa Coroutine: ${e.message}")
+	                e.printStackTrace()
+	            }
+	        }
+	    }
     
     /**
      * Executa Rede/Pacotes.

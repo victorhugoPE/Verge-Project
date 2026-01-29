@@ -109,8 +109,7 @@ tasks.register("deployToVerge") {
     doLast {
         val jarFile = tasks.named<Jar>("jar").get().archiveFile.get().asFile
         val destinations = listOf(
-            file("C:/Users/Victor Hugo/Desktop/Verge/gameserver/libs"),
-            file("C:/Users/Victor Hugo/Desktop/Verge/login/libs")
+            file("C:/Users/Victor Hugo/Desktop/Verge/libs")
         )
         if (jarFile.exists()) {
             println(">>> DEPLOY SUCESSO: ${jarFile.name} (${jarFile.length() / 1024} KB) <<<")

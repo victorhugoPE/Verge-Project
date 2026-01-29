@@ -78,7 +78,7 @@ public class Shutdown extends Thread
 	@Override
 	public void run()
 	{
-		if (this == SingletonHolder.INSTANCE)
+		if (this == SingletonHolder.INSTANCE || Thread.currentThread().getName().equals("L2J-Shutdown-Manager"))
 		{
 			StringUtil.printSection("Under " + MODE_TEXT[_shutdownMode] + " process");
 			
